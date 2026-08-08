@@ -37,6 +37,11 @@ enum DeliveryMethod {
   SUCURSAL
 }
 
+enum DiscountType {
+  PORCENTAJE
+  FIJO
+}
+
 model User {
   id           String   @id @default(cuid())
   email        String   @unique
@@ -126,6 +131,7 @@ model Product {
 
   specs      ProductSpec[]
   orderItems OrderItem[]
+  reviews    Review[]
 }
 
 model ProductSpec {
@@ -147,12 +153,42 @@ model Order {
   sucursal       Sucursal?      @relation(fields: [sucursalId], references: [id])
   subtotal       Decimal        @db.Decimal(10, 2)
   shipping       Decimal        @db.Decimal(10, 2)
+  discount       Decimal        @db.Decimal(10, 2) @default(0)
+  couponId       String?
+  coupon         Coupon?        @relation(fields: [couponId], references: [id])
   total          Decimal        @db.Decimal(10, 2)
   mercadoPagoId  String?
   createdAt      DateTime       @default(now())
   updatedAt      DateTime       @updatedAt
 
   items OrderItem[]
+}
+
+model Coupon {
+  id          String       @id @default(cuid())
+  code        String       @unique
+  type        DiscountType
+  value       Decimal      @db.Decimal(10, 2)
+  minPurchase Decimal?     @db.Decimal(10, 2)
+  maxUses     Int?
+  usedCount   Int          @default(0)
+  active      Boolean      @default(true)
+  expiresAt   DateTime?
+  createdAt   DateTime     @default(now())
+
+  orders Order[]
+}
+
+model Review {
+  id            String   @id @default(cuid())
+  productId     String
+  product       Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  customerName  String
+  customerEmail String
+  rating        Int
+  comment       String
+  approved      Boolean  @default(false)
+  createdAt     DateTime @default(now())
 }
 
 model ContactMessage {

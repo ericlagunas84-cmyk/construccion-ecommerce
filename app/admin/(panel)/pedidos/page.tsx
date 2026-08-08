@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { prisma } from "@/lib/prisma";
 import { money } from "@/lib/format";
 import OrderStatusSelect from "@/components/admin/OrderStatusSelect";
@@ -29,7 +30,9 @@ export default async function AdminPedidosPage() {
           <tbody className="divide-y divide-brand-line">
             {orders.map((o: (typeof orders)[number]) => (
               <tr key={o.id}>
-                <td className="px-4 py-3 font-mono text-xs font-medium text-brand-ink">{o.number}</td>
+                <td className="px-4 py-3 font-mono text-xs font-medium text-brand-blue hover:underline">
+                  <Link href={`/admin/pedidos/${o.id}`}>{o.number}</Link>
+                </td>
                 <td className="px-4 py-3 text-brand-ink-soft">{o.customer.name}</td>
                 <td className="px-4 py-3 text-brand-ink-soft">
                   {o.createdAt.toLocaleDateString("es-MX", { day: "2-digit", month: "short", year: "numeric" })}

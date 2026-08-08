@@ -7,6 +7,8 @@ import ProductCard from "@/components/ProductCard";
 import { money } from "@/lib/format";
 import { getProductBySlug, getRelatedProducts } from "@/lib/data/catalog";
 import AddToCart from "@/components/AddToCart";
+import ProductReviews from "@/components/ProductReviews";
+import { prisma } from "@/lib/prisma";
 
 // Sin esto, Next.js solo generaría páginas para los productos que existían
 // en la base de datos al momento del build en Vercel — un producto nuevo
@@ -49,6 +51,13 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
   if (!product) return notFound();
 
   const related = await getRelatedProducts(product);
+  const dbProduct = await prisma.product.findUnique({ where: { slug: product.slug } });
+  const reviews = dbProduct
+    ? await prisma.review.findMany({
+        where: { productId: dbProduct.id, approved: true },
+        orderBy: { createdAt: "desc" },
+      })
+    : [];
 
   return (
     <>
@@ -152,6 +161,8 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
             <p className="text-sm leading-relaxed text-brand-ink-soft">{product.description}</p>
           </div>
         </div>
+
+        <ProductReviews productSlug={product.slug} reviews={reviews} />
 
         {/* Relacionados */}
         {related.length > 0 && (
