@@ -41,7 +41,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
             <div className="mb-3 flex aspect-square items-center justify-center overflow-hidden rounded-lg bg-brand-blue-light text-xs font-mono text-brand-ink-soft">
               {product.imageUrl ? (
                 // eslint-disable-next-line @next/next/no-img-element
-                <img src={product.imageUrl} alt={product.name} className="h-full w-full object-cover" />
+                <img src={product.imageUrl} alt={product.name} className="h-full w-full object-contain p-4" />
               ) : (
                 "foto principal 1200×1200 — clic para zoom"
               )}

@@ -33,7 +33,7 @@ export default function ProductCard({ product }: { product: Product }) {
       <Link href={`/producto/${product.slug}`} className="flex h-44 items-center justify-center overflow-hidden rounded-t-lg bg-brand-blue-light text-xs font-mono text-brand-ink-soft">
         {product.imageUrl ? (
           // eslint-disable-next-line @next/next/no-img-element
-          <img src={product.imageUrl} alt={product.name} className="h-full w-full object-cover" />
+          <img src={product.imageUrl} alt={product.name} className="h-full w-full object-contain p-3" />
         ) : (
           "foto 1000×1000"
         )}

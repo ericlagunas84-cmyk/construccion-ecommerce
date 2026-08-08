@@ -429,29 +429,6 @@ export const products: Product[] = [
     soldCount: 54,
     createdAt: "2026-02-10",
   },
-
-  {
-    sku: "IMP-2210",
-    slug: "impermeabilizante-acrilico-19l",
-    name: "Impermeabilizante acrílico 5 años 19 L",
-    category: "impermeabilizantes",
-    brand: "Comex",
-    price: 1560,
-    compareAtPrice: 1790,
-    availability: "disponible",
-    featured: true,
-    shortDescription: "Membrana acrílica elastomérica con garantía de 5 años.",
-    description:
-      "Impermeabilizante 100% acrílico, elástico, resistente a rayos UV. Ideal para azoteas transitables y no transitables.",
-    specs: [
-      { label: "Presentación", value: "Cubeta 19 L" },
-      { label: "Garantía", value: "5 años" },
-      { label: "Rendimiento", value: "~9.5 m² a 2 manos" },
-    ],
-    hasTechSheet: true,
-    soldCount: 720,
-    createdAt: "2026-01-12",
-  },
   {
     sku: "IMP-2311",
     slug: "impermeabilizante-poliuretano-19l",
