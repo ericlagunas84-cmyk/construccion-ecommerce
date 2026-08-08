@@ -1,0 +1,174 @@
+// Esquema de base de datos — PostgreSQL vía Prisma.
+// Refleja el catálogo, pedidos, clientes y usuarios con roles descritos
+// en el prompt maestro del proyecto.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  ADMIN
+  EMPLEADO
+  CLIENTE
+}
+
+enum OrderStatus {
+  PENDIENTE
+  PAGADO
+  PREPARANDO
+  ENVIADO
+  ENTREGADO
+  CANCELADO
+}
+
+enum Availability {
+  DISPONIBLE
+  POCAS_PIEZAS
+  AGOTADO
+}
+
+enum DeliveryMethod {
+  DOMICILIO
+  SUCURSAL
+}
+
+model User {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  passwordHash String
+  name         String
+  role         Role     @default(CLIENTE)
+  createdAt    DateTime @default(now())
+
+  customer Customer?
+}
+
+model Customer {
+  id        String    @id @default(cuid())
+  userId    String?   @unique
+  user      User?     @relation(fields: [userId], references: [id])
+  name      String
+  email     String    @unique
+  phone     String?
+  createdAt DateTime  @default(now())
+
+  addresses Address[]
+  orders    Order[]
+}
+
+model Address {
+  id         String   @id @default(cuid())
+  customerId String
+  customer   Customer @relation(fields: [customerId], references: [id])
+  street     String
+  colonia    String
+  city       String
+  state      String
+  postalCode String
+  isDefault  Boolean  @default(false)
+}
+
+model Category {
+  slug        String    @id
+  name        String
+  description String
+  visible     Boolean   @default(true)
+  sortOrder   Int       @default(0)
+  products    Product[]
+}
+
+model Brand {
+  name     String    @id
+  products Product[]
+}
+
+model Sucursal {
+  id      String  @id @default(cuid())
+  name    String
+  address String
+  hours   String
+  orders  Order[]
+}
+
+model Product {
+  id                String       @id @default(cuid())
+  sku               String       @unique
+  codigoInterno     String?
+  slug              String       @unique
+  name              String
+  shortDescription  String
+  description       String
+  categorySlug      String
+  category          Category     @relation(fields: [categorySlug], references: [slug])
+  brandName         String
+  brand             Brand        @relation(fields: [brandName], references: [name])
+  price             Decimal      @db.Decimal(10, 2)
+  compareAtPrice    Decimal?     @db.Decimal(10, 2)
+  cost              Decimal?     @db.Decimal(10, 2)
+  stock             Int          @default(0)
+  unit              String       @default("pieza")
+  weightKg          Decimal?     @db.Decimal(10, 3)
+  availability      Availability @default(DISPONIBLE)
+  featured          Boolean      @default(false)
+  visible           Boolean      @default(true)
+  hasTechSheet      Boolean      @default(false)
+  tags              String[]     @default([])
+  soldCount         Int          @default(0)
+  createdAt         DateTime     @default(now())
+  updatedAt         DateTime     @updatedAt
+
+  specs      ProductSpec[]
+  orderItems OrderItem[]
+}
+
+model ProductSpec {
+  id        String  @id @default(cuid())
+  productId String
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+  label     String
+  value     String
+}
+
+model Order {
+  id             String         @id @default(cuid())
+  number         String         @unique // folio visible al cliente, p.ej. CE-000123
+  customerId     String
+  customer       Customer       @relation(fields: [customerId], references: [id])
+  status         OrderStatus    @default(PENDIENTE)
+  deliveryMethod DeliveryMethod
+  sucursalId     String?
+  sucursal       Sucursal?      @relation(fields: [sucursalId], references: [id])
+  subtotal       Decimal        @db.Decimal(10, 2)
+  shipping       Decimal        @db.Decimal(10, 2)
+  total          Decimal        @db.Decimal(10, 2)
+  mercadoPagoId  String?
+  createdAt      DateTime       @default(now())
+  updatedAt      DateTime       @updatedAt
+
+  items OrderItem[]
+}
+
+model ContactMessage {
+  id        String   @id @default(cuid())
+  name      String
+  email     String
+  phone     String?
+  message   String
+  read      Boolean  @default(false)
+  createdAt DateTime @default(now())
+}
+
+model OrderItem {
+  id        String  @id @default(cuid())
+  orderId   String
+  order     Order   @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  productId String
+  product   Product @relation(fields: [productId], references: [id])
+  qty       Int
+  unitPrice Decimal @db.Decimal(10, 2)
+}
