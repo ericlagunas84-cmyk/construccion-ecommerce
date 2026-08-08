@@ -3,6 +3,8 @@ import Footer from "@/components/Footer";
 import CatalogoClient from "@/components/CatalogoClient";
 import { getAllProducts, getCategories, getBrands } from "@/lib/data/catalog";
 
+export const dynamic = "force-dynamic";
+
 export default async function CatalogoPage() {
   const [products, categories, brands] = await Promise.all([
     getAllProducts(),

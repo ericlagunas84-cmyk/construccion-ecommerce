@@ -4,13 +4,13 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import ProductCard from "@/components/ProductCard";
 import { money } from "@/lib/format";
-import { getProductBySlug, getRelatedProducts, getAllProductSlugs } from "@/lib/data/catalog";
+import { getProductBySlug, getRelatedProducts } from "@/lib/data/catalog";
 import AddToCart from "@/components/AddToCart";
 
-export async function generateStaticParams() {
-  const slugs = await getAllProductSlugs();
-  return slugs.map((slug) => ({ slug }));
-}
+// Sin esto, Next.js solo generaría páginas para los productos que existían
+// en la base de datos al momento del build en Vercel — un producto nuevo
+// (como IMPAC) no aparecería hasta el siguiente deploy.
+export const dynamic = "force-dynamic";
 
 const availabilityLabel = {
   disponible: "Disponible",
