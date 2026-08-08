@@ -5,7 +5,12 @@ import { getAllProducts, getCategories, getBrands } from "@/lib/data/catalog";
 
 export const dynamic = "force-dynamic";
 
-export default async function CatalogoPage() {
+export default async function CatalogoPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ q?: string; cat?: string }>;
+}) {
+  const params = await searchParams;
   const [products, categories, brands] = await Promise.all([
     getAllProducts(),
     getCategories(),
@@ -16,7 +21,13 @@ export default async function CatalogoPage() {
     <>
       <Header />
       <main className="mx-auto max-w-7xl px-6 py-10">
-        <CatalogoClient products={products} categories={categories} brands={brands} />
+        <CatalogoClient
+          products={products}
+          categories={categories}
+          brands={brands}
+          initialQuery={params.q ?? ""}
+          initialCategory={params.cat ?? ""}
+        />
       </main>
       <Footer />
     </>

@@ -58,8 +58,14 @@ export async function createOrder(input: CheckoutInput) {
   );
 
   for (const item of input.items) {
-    if (!productBySku.has(item.sku)) {
+    const product = productBySku.get(item.sku);
+    if (!product) {
       throw new Error(`Producto no encontrado: ${item.sku}`);
+    }
+    if (product.availability === "AGOTADO" || product.stock < item.qty) {
+      throw new Error(
+        `"${product.name}" ya no tiene suficiente stock disponible (quedan ${product.stock}). Ajusta la cantidad en tu carrito.`
+      );
     }
   }
 
@@ -90,13 +96,19 @@ export async function createOrder(input: CheckoutInput) {
     },
   });
 
-  // Refleja la venta en el contador de más vendidos de cada producto,
-  // para que el dashboard y "más vendidos" del catálogo se mantengan
-  // reales sin depender de un job aparte.
+  // Refleja la venta en el contador de más vendidos y descuenta el stock
+  // real de cada producto — si se agota, lo marca automáticamente como
+  // AGOTADO para que no se pueda seguir comprando hasta reabastecerlo.
   for (const item of input.items) {
+    const product = productBySku.get(item.sku)!;
+    const newStock = product.stock - item.qty;
     await prisma.product.update({
       where: { sku: item.sku },
-      data: { soldCount: { increment: item.qty } },
+      data: {
+        soldCount: { increment: item.qty },
+        stock: newStock,
+        availability: newStock <= 0 ? "AGOTADO" : newStock <= 5 ? "POCAS_PIEZAS" : "DISPONIBLE",
+      },
     });
   }
 

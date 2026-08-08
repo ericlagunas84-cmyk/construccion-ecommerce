@@ -2,6 +2,7 @@
 
 import { useState, useRef, useEffect } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 import { useCart } from "@/lib/cart-context";
 
@@ -24,6 +25,9 @@ const WhatsAppIcon = ({ className = "" }: { className?: string }) => (
 export default function Header() {
   const { count } = useCart();
   const { data: session, status } = useSession();
+  const router = useRouter();
+  const [searchValue, setSearchValue] = useState("");
+  const [mobileSearchValue, setMobileSearchValue] = useState("");
   const [productsOpen, setProductsOpen] = useState(false);
   const [mobileProductsOpen, setMobileProductsOpen] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -50,6 +54,15 @@ export default function Header() {
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
+
+  function handleSearch(e: React.FormEvent, value: string) {
+    e.preventDefault();
+    const trimmed = value.trim();
+    if (trimmed) {
+      router.push(`/catalogo?q=${encodeURIComponent(trimmed)}`);
+      setMobileMenuOpen(false);
+    }
+  }
 
   return (
     <header className="sticky top-0 z-50 border-b border-brand-line bg-brand-paper/95 backdrop-blur">
@@ -94,16 +107,23 @@ export default function Header() {
         </nav>
 
         {/* Buscador de escritorio */}
-        <div className="hidden flex-1 max-w-sm items-center rounded-md border border-brand-line px-3 py-2 lg:flex">
-          <svg width="16" height="16" viewBox="0 0 24 24" className="mr-2 shrink-0 text-brand-ink-soft" fill="none" stroke="currentColor" strokeWidth="2">
-            <circle cx="11" cy="11" r="7" /><path d="m21 21-4.3-4.3" />
-          </svg>
+        <form
+          onSubmit={(e) => handleSearch(e, searchValue)}
+          className="hidden flex-1 max-w-sm items-center rounded-md border border-brand-line px-3 py-2 lg:flex"
+        >
+          <button type="submit" aria-label="Buscar" className="mr-2 shrink-0 text-brand-ink-soft">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <circle cx="11" cy="11" r="7" /><path d="m21 21-4.3-4.3" />
+            </svg>
+          </button>
           <input
             type="search"
+            value={searchValue}
+            onChange={(e) => setSearchValue(e.target.value)}
             placeholder="Buscar por nombre, SKU o marca…"
             className="w-full bg-transparent text-sm outline-none placeholder:text-brand-ink-soft"
           />
-        </div>
+        </form>
 
         <Link
           href={status === "authenticated" ? "/cuenta" : "/login"}
@@ -162,16 +182,23 @@ export default function Header() {
       {/* Panel de menú móvil */}
       {mobileMenuOpen && (
         <div className="border-t border-brand-line bg-white px-6 py-5 lg:hidden">
-          <div className="mb-5 flex items-center rounded-md border border-brand-line px-3 py-2.5">
-            <svg width="16" height="16" viewBox="0 0 24 24" className="mr-2 shrink-0 text-brand-ink-soft" fill="none" stroke="currentColor" strokeWidth="2">
-              <circle cx="11" cy="11" r="7" /><path d="m21 21-4.3-4.3" />
-            </svg>
+          <form
+            onSubmit={(e) => handleSearch(e, mobileSearchValue)}
+            className="mb-5 flex items-center rounded-md border border-brand-line px-3 py-2.5"
+          >
+            <button type="submit" aria-label="Buscar" className="mr-2 shrink-0 text-brand-ink-soft">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <circle cx="11" cy="11" r="7" /><path d="m21 21-4.3-4.3" />
+              </svg>
+            </button>
             <input
               type="search"
+              value={mobileSearchValue}
+              onChange={(e) => setMobileSearchValue(e.target.value)}
               placeholder="Buscar por nombre, SKU o marca…"
               className="w-full bg-transparent text-sm outline-none placeholder:text-brand-ink-soft"
             />
-          </div>
+          </form>
 
           <nav className="flex flex-col gap-1 text-sm font-bold text-brand-ink">
             <button

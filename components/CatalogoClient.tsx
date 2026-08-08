@@ -10,13 +10,19 @@ export default function CatalogoClient({
   products,
   categories,
   brands,
+  initialQuery = "",
+  initialCategory = "",
 }: {
   products: Product[];
   categories: Category[];
   brands: Brand[];
+  initialQuery?: string;
+  initialCategory?: string;
 }) {
-  const [query, setQuery] = useState("");
-  const [activeCategories, setActiveCategories] = useState<string[]>([]);
+  const [query, setQuery] = useState(initialQuery);
+  const [activeCategories, setActiveCategories] = useState<string[]>(
+    initialCategory ? [initialCategory] : []
+  );
   const [activeBrands, setActiveBrands] = useState<string[]>([]);
   const [activeAvailability, setActiveAvailability] = useState<Availability[]>([]);
   const [maxPrice, setMaxPrice] = useState(3500);

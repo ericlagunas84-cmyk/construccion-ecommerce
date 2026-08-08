@@ -1,5 +1,6 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
+import type { Metadata } from "next";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import ProductCard from "@/components/ProductCard";
@@ -11,6 +12,30 @@ import AddToCart from "@/components/AddToCart";
 // en la base de datos al momento del build en Vercel — un producto nuevo
 // (como IMPAC) no aparecería hasta el siguiente deploy.
 export const dynamic = "force-dynamic";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}): Promise<Metadata> {
+  const { slug } = await params;
+  const product = await getProductBySlug(slug);
+  if (!product) return { title: "Producto no encontrado — Epoxy Depot" };
+
+  const title = `${product.name} — Epoxy Depot`;
+  const description = product.shortDescription;
+
+  return {
+    title,
+    description,
+    openGraph: {
+      title,
+      description,
+      type: "website",
+      images: product.imageUrl ? [{ url: product.imageUrl }] : undefined,
+    },
+  };
+}
 
 const availabilityLabel = {
   disponible: "Disponible",

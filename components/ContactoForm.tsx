@@ -22,6 +22,7 @@ export default function ContactoForm({ sucursales }: { sucursales: Sucursal[] })
         email: String(form.get("email") ?? ""),
         phone: String(form.get("phone") ?? ""),
         message: String(form.get("message") ?? ""),
+        website: String(form.get("website") ?? ""),
       });
       setSent(true);
     } catch {
@@ -54,6 +55,16 @@ export default function ContactoForm({ sucursales }: { sucursales: Sucursal[] })
               </div>
             ) : (
               <form onSubmit={handleSubmit} className="space-y-4">
+                {/* Campo trampa para bots — invisible y fuera del flujo de tabulación
+                    para personas reales; si llega lleno, se descarta el envío. */}
+                <input
+                  type="text"
+                  name="website"
+                  tabIndex={-1}
+                  autoComplete="off"
+                  aria-hidden="true"
+                  className="absolute left-[-9999px] h-0 w-0 opacity-0"
+                />
                 <div>
                   <label className="mb-1.5 block text-xs font-medium text-brand-ink-soft">Nombre</label>
                   <input name="name" required className="w-full rounded-md border border-brand-line px-3 py-2.5 text-sm focus:border-brand-blue focus:outline-none" />

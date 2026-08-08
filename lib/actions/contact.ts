@@ -10,7 +10,12 @@ export async function submitContactMessage(data: {
   email: string;
   phone: string;
   message: string;
+  website?: string; // campo trampa (honeypot) — invisible para personas, los bots sí lo llenan
 }) {
+  // Si el campo trampa viene lleno, es casi seguro un bot — se ignora en
+  // silencio (no delatamos que detectamos el bot, solo no guardamos nada).
+  if (data.website) return;
+
   if (!data.name || !data.email || !data.message) {
     throw new Error("Faltan campos requeridos");
   }

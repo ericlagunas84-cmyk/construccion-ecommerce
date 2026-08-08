@@ -32,9 +32,14 @@ export default function CheckoutForm({ sucursales }: { sucursales: Sucursal[] })
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setError("");
-    setSubmitting(true);
 
     const form = new FormData(e.currentTarget);
+
+    // Campo trampa para bots — si viene lleno, se ignora el envío en
+    // silencio, sin mostrar error (para no delatar la protección).
+    if (String(form.get("website") ?? "")) return;
+
+    setSubmitting(true);
     try {
       const result = await createOrder({
         items,
@@ -129,6 +134,14 @@ export default function CheckoutForm({ sucursales }: { sucursales: Sucursal[] })
         <h1 className="mb-8 text-3xl font-bold text-brand-ink">Checkout</h1>
 
         <form onSubmit={handleSubmit} className="grid gap-10 md:grid-cols-[1fr_320px]">
+          <input
+            type="text"
+            name="website"
+            tabIndex={-1}
+            autoComplete="off"
+            aria-hidden="true"
+            className="absolute left-[-9999px] h-0 w-0 opacity-0"
+          />
           <div className="space-y-8">
             {/* Datos de contacto */}
             <fieldset>
