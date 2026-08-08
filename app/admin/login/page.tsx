@@ -27,9 +27,8 @@ export default function AdminLoginPage() {
   return (
     <main className="flex min-h-screen items-center justify-center bg-brand-blue-light px-6">
       <div className="w-full max-w-sm rounded-lg border border-brand-line bg-white p-8 shadow-sm">
-        <p className="mb-1 font-display text-xl font-700 text-brand-blue">
-          Construc<span className="text-brand-orange">Express</span>
-        </p>
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img src="/logo-epoxy-depot.png" alt="Epoxy Depot" className="mb-3 h-9 w-auto" />
         <h1 className="mb-6 text-sm text-brand-ink-soft">Panel administrativo</h1>
 
         <form onSubmit={handleSubmit} className="space-y-4">
