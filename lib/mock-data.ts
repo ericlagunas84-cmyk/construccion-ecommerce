@@ -25,6 +25,8 @@ export type Product = {
   description: string;
   specs: { label: string; value: string }[];
   hasTechSheet: boolean;
+  techSheetUrl?: string;
+  imageUrl?: string;
   soldCount: number; // usado para ordenar "más vendidos"
   createdAt: string; // ISO — usado para ordenar "más recientes"
 };
@@ -110,6 +112,7 @@ export const brands: Brand[] = [
   { name: "Sika" },
   { name: "DeWalt" },
   { name: "Pochteca" },
+  { name: "Impac" },
 
   { name: "Convergent" },
   { name: "Corvixx" },
@@ -1023,6 +1026,32 @@ export const products: Product[] = [
     description: "Epóxico reparación secado rápido de la marca SSP. Código: Patch 500.",
     specs: [{ label: "Material", value: "Epóxico reparación secado rápido" }, { label: "Código", value: "Patch 500" }],
     hasTechSheet: false,
+    soldCount: 0,
+    createdAt: "2026-08-08",
+  },
+  {
+    sku: "IMP-001",
+    slug: "impac-5000-fibratado",
+    name: "IMPAC 5000 Fibratado — Impac",
+    category: "impermeabilizantes",
+    brand: "Impac",
+    price: 2199,
+    availability: "disponible",
+    featured: true,
+    shortDescription: "Impermeabilizante acrílico elastomérico fibratado, con garantía de 5 años.",
+    description:
+      "IMPAC 5000 Fibratado es un impermeabilizante formulado a base de resinas acrílicas y fibras sintéticas. Alto poder reflejante (color blanco), base agua, resistente a los movimientos normales de la construcción de losas monolíticas, por lo que evita las filtraciones de humedad. Vida garantizada de 5 años (Tipo 5A). Cuenta con filtro solar UV-SHIELD II y está diseñado con fibras que sustituyen el uso de tela de refuerzo (excepto en puntos críticos).",
+    specs: [
+      { label: "Presentación", value: "3.8 L, 19 L, 22.8 L" },
+      { label: "Color", value: "Blanco, Rojo Terracota y Gris" },
+      { label: "Rendimiento", value: "19 m² por cubeta de 19 L sin tela de refuerzo (2 manos)" },
+      { label: "Elongación", value: "> 300%" },
+      { label: "Sólidos", value: "48% – 52%" },
+      { label: "Garantía", value: "5 años a partir de la fecha de facturación" },
+    ],
+    hasTechSheet: true,
+    techSheetUrl: "/fichas-tecnicas/impac-5000-fibratado.pdf",
+    imageUrl: "/products/impac-5000-fibratado.jpg",
     soldCount: 0,
     createdAt: "2026-08-08",
   },

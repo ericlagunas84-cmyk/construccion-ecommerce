@@ -63,6 +63,8 @@ async function main() {
         availability: availabilityMap[p.availability],
         featured: p.featured,
         hasTechSheet: p.hasTechSheet,
+        techSheetUrl: p.techSheetUrl ?? null,
+        imageUrl: p.imageUrl ?? null,
         soldCount: p.soldCount,
         createdAt: new Date(p.createdAt),
         specs: { create: p.specs.map((s) => ({ label: s.label, value: s.value })) },

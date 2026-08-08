@@ -17,6 +17,8 @@ export type Product = {
   description: string;
   specs: ProductSpecItem[];
   hasTechSheet: boolean;
+  techSheetUrl?: string;
+  imageUrl?: string;
   soldCount: number;
   createdAt: string;
 };

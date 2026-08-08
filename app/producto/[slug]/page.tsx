@@ -38,8 +38,13 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
         <div className="grid gap-10 md:grid-cols-2">
           {/* Galería */}
           <div>
-            <div className="mb-3 flex aspect-square items-center justify-center rounded-lg bg-brand-blue-light text-xs font-mono text-brand-ink-soft">
-              foto principal 1200×1200 — clic para zoom
+            <div className="mb-3 flex aspect-square items-center justify-center overflow-hidden rounded-lg bg-brand-blue-light text-xs font-mono text-brand-ink-soft">
+              {product.imageUrl ? (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img src={product.imageUrl} alt={product.name} className="h-full w-full object-cover" />
+              ) : (
+                "foto principal 1200×1200 — clic para zoom"
+              )}
             </div>
             <div className="grid grid-cols-4 gap-3">
               {[1, 2, 3, 4].map((i) => (
@@ -90,7 +95,9 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
 
             {product.hasTechSheet && (
               <a
-                href="#"
+                href={product.techSheetUrl ?? "#"}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-brand-blue hover:text-brand-orange"
               >
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">

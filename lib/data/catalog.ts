@@ -29,6 +29,8 @@ function toProduct(
     description: p.description,
     specs: p.specs?.map((s: { label: string; value: string }) => ({ label: s.label, value: s.value })) ?? [],
     hasTechSheet: p.hasTechSheet,
+    techSheetUrl: p.techSheetUrl ?? undefined,
+    imageUrl: p.imageUrl ?? undefined,
     soldCount: p.soldCount,
     createdAt: p.createdAt.toISOString(),
   };

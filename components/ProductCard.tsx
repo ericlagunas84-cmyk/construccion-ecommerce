@@ -30,8 +30,13 @@ export default function ProductCard({ product }: { product: Product }) {
 
   return (
     <div className="flex flex-col rounded-lg border border-brand-line bg-white transition hover:shadow-md">
-      <Link href={`/producto/${product.slug}`} className="flex h-44 items-center justify-center rounded-t-lg bg-brand-blue-light text-xs font-mono text-brand-ink-soft">
-        foto 1000×1000
+      <Link href={`/producto/${product.slug}`} className="flex h-44 items-center justify-center overflow-hidden rounded-t-lg bg-brand-blue-light text-xs font-mono text-brand-ink-soft">
+        {product.imageUrl ? (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img src={product.imageUrl} alt={product.name} className="h-full w-full object-cover" />
+        ) : (
+          "foto 1000×1000"
+        )}
       </Link>
       <div className="flex flex-1 flex-col p-5">
         <div className="mb-2 flex items-center justify-between">
