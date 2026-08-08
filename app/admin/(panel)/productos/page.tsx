@@ -2,6 +2,8 @@ import Link from "next/link";
 import { prisma } from "@/lib/prisma";
 import { money } from "@/lib/format";
 import { deleteProduct, toggleFeatured, toggleVisible, duplicateProduct } from "@/lib/actions/products";
+import { exportProductsCsv } from "@/lib/actions/export";
+import ExportCsvButton from "@/components/admin/ExportCsvButton";
 
 export default async function AdminProductosPage() {
   const products = await prisma.product.findMany({
@@ -16,12 +18,15 @@ export default async function AdminProductosPage() {
           <h1 className="text-2xl font-bold text-brand-ink">Productos</h1>
           <p className="text-sm text-brand-ink-soft">{products.length} productos en catálogo</p>
         </div>
-        <Link
-          href="/admin/productos/nuevo"
-          className="rounded-md bg-brand-orange px-5 py-2.5 text-sm font-semibold uppercase tracking-wide text-white transition hover:bg-brand-orange-dark"
-        >
-          + Nuevo producto
-        </Link>
+        <div className="flex gap-2">
+          <ExportCsvButton action={exportProductsCsv} />
+          <Link
+            href="/admin/productos/nuevo"
+            className="rounded-md bg-brand-orange px-5 py-2.5 text-sm font-semibold uppercase tracking-wide text-white transition hover:bg-brand-orange-dark"
+          >
+            + Nuevo producto
+          </Link>
+        </div>
       </div>
 
       <div className="overflow-x-auto rounded-lg border border-brand-line bg-white">

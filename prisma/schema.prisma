@@ -179,6 +179,12 @@ model Coupon {
   orders Order[]
 }
 
+model Newsletter {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  createdAt DateTime @default(now())
+}
+
 model Review {
   id            String   @id @default(cuid())
   productId     String

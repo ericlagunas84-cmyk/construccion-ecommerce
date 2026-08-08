@@ -2,6 +2,8 @@ import Link from "next/link";
 import { prisma } from "@/lib/prisma";
 import { money } from "@/lib/format";
 import OrderStatusSelect from "@/components/admin/OrderStatusSelect";
+import { exportOrdersCsv } from "@/lib/actions/export";
+import ExportCsvButton from "@/components/admin/ExportCsvButton";
 
 export default async function AdminPedidosPage() {
   const orders = await prisma.order.findMany({
@@ -11,8 +13,13 @@ export default async function AdminPedidosPage() {
 
   return (
     <div>
-      <h1 className="mb-1 text-2xl font-bold text-brand-ink">Pedidos</h1>
-      <p className="mb-6 text-sm text-brand-ink-soft">{orders.length} pedidos totales</p>
+      <div className="mb-6 flex items-center justify-between">
+        <div>
+          <h1 className="mb-1 text-2xl font-bold text-brand-ink">Pedidos</h1>
+          <p className="text-sm text-brand-ink-soft">{orders.length} pedidos totales</p>
+        </div>
+        <ExportCsvButton action={exportOrdersCsv} />
+      </div>
 
       <div className="overflow-x-auto rounded-lg border border-brand-line bg-white">
         <table className="w-full text-sm">

@@ -37,7 +37,17 @@ export default async function AdminPedidoDetallePage({
             {order.createdAt.toLocaleDateString("es-MX", { day: "2-digit", month: "long", year: "numeric", hour: "2-digit", minute: "2-digit" })}
           </p>
         </div>
-        <OrderStatusSelect orderId={order.id} status={order.status} />
+        <div className="flex items-center gap-3">
+          <a
+            href={`/admin/pedidos/${order.id}/recibo`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="rounded-md border border-brand-line px-4 py-2 text-xs font-semibold uppercase text-brand-ink hover:border-brand-blue"
+          >
+            Ver recibo
+          </a>
+          <OrderStatusSelect orderId={order.id} status={order.status} />
+        </div>
       </div>
 
       <div className="grid gap-6 sm:grid-cols-2">
