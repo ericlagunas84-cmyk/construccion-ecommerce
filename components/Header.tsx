@@ -11,8 +11,9 @@ export default function Header() {
   return (
     <header className="sticky top-0 z-50 border-b border-brand-line bg-brand-paper/95 backdrop-blur">
       <div className="mx-auto flex max-w-7xl items-center gap-6 px-6 py-4">
-        <Link href="/" className="font-display text-xl font-700 text-brand-blue">
-          Construc<span className="text-brand-orange">Express</span>
+        <Link href="/" className="flex items-center">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src="/logo-epoxy-depot.png" alt="Epoxy Depot" className="h-10 w-auto" />
         </Link>
 
         <nav className="hidden flex-1 items-center gap-6 whitespace-nowrap text-sm font-medium text-brand-ink lg:flex">

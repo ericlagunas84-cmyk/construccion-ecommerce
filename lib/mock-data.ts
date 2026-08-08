@@ -72,9 +72,9 @@ export const brands: Brand[] = [
 export type Sucursal = { id: string; name: string; address: string; hours: string };
 
 export const sucursales: Sucursal[] = [
-  { id: "centro", name: "Sucursal Centro", address: "Av. Juárez 120, Centro", hours: "Lun–Sáb 8:00–19:00" },
-  { id: "norte", name: "Sucursal Norte", address: "Blvd. Industrial 845, Zona Norte", hours: "Lun–Sáb 8:00–18:00" },
-  { id: "sur", name: "Sucursal Sur", address: "Calz. del Valle 33, Zona Sur", hours: "Lun–Vie 8:00–18:00" },
+  { id: "sucursal-1", name: "Sucursal 1", address: "Paseo de las Liebres 404", hours: "Lun–Sáb 8:00–19:00" },
+  { id: "monterrey", name: "Sucursal Monterrey", address: "Av. Adolfo López Mateos 808, Infonavit La Joya, 67160 Monterrey, N.L.", hours: "Lun–Sáb 8:00–19:00" },
+  { id: "juarez", name: "Sucursal Juárez", address: "C. Simona Barba 5107, 3a Burócrata, 32360 Juárez, Chih.", hours: "Lun–Sáb 8:00–19:00" },
 ];
 
 export const estadosMx = [

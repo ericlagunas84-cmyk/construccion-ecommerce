@@ -14,8 +14,9 @@ export default function AdminSidebar() {
   return (
     <aside className="flex w-60 shrink-0 flex-col border-r border-brand-line bg-white">
       <div className="border-b border-brand-line px-6 py-5">
-        <Link href="/admin" className="font-display text-lg font-700 text-brand-blue">
-          Construc<span className="text-brand-orange">Express</span>
+        <Link href="/admin" className="block">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src="/logo-epoxy-depot.png" alt="Epoxy Depot" className="h-8 w-auto" />
         </Link>
         <p className="mt-0.5 text-xs text-brand-ink-soft">Panel administrativo</p>
       </div>

@@ -85,17 +85,17 @@ export default function ContactoForm({ sucursales }: { sucursales: Sucursal[] })
           {/* Datos + mapa */}
           <div>
             <div className="mb-6 flex aspect-[4/3] items-center justify-center rounded-lg bg-brand-blue-light text-xs font-mono text-brand-ink-soft">
-              mapa — sucursal Centro
+              mapa — Paseo de las Liebres 404
             </div>
 
             <div className="space-y-5 text-sm">
               <div>
                 <p className="font-semibold text-brand-ink">Teléfono</p>
-                <p className="text-brand-ink-soft">(55) 0000 0000</p>
+                <p className="text-brand-ink-soft">+800 400 8000</p>
               </div>
               <div>
                 <p className="font-semibold text-brand-ink">WhatsApp</p>
-                <p className="text-brand-ink-soft">(55) 0000 0000</p>
+                <p className="text-brand-ink-soft">+52 477 139 5384</p>
               </div>
               <div>
                 <p className="font-semibold text-brand-ink">Horario</p>
