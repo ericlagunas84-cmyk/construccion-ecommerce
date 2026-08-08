@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { prisma } from "@/lib/prisma";
 import { createProduct } from "@/lib/actions/products";
+import ImageUploadField from "@/components/admin/ImageUploadField";
 
 export default async function NuevoProductoPage() {
   const [categories, brands] = await Promise.all([
@@ -16,6 +17,7 @@ export default async function NuevoProductoPage() {
       <h1 className="mb-6 text-2xl font-bold text-brand-ink">Nuevo producto</h1>
 
       <form action={createProduct} className="space-y-5 rounded-lg border border-brand-line bg-white p-6">
+        <ImageUploadField />
         <div className="grid gap-4 sm:grid-cols-2">
           <div className="sm:col-span-2">
             <label className="mb-1.5 block text-xs font-medium text-brand-ink-soft">Nombre</label>

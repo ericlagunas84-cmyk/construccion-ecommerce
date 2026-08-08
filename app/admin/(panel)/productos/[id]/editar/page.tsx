@@ -2,6 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { prisma } from "@/lib/prisma";
 import { updateProduct } from "@/lib/actions/products";
+import ImageUploadField from "@/components/admin/ImageUploadField";
 
 export default async function EditarProductoPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
@@ -26,6 +27,8 @@ export default async function EditarProductoPage({ params }: { params: Promise<{
       </div>
 
       <form action={updateWithId} className="space-y-5 rounded-lg border border-brand-line bg-white p-6">
+        <ImageUploadField initialUrl={product.imageUrl ?? undefined} />
+
         <div className="grid gap-4 sm:grid-cols-2">
           <div className="sm:col-span-2">
             <label className="mb-1.5 block text-xs font-medium text-brand-ink-soft">Nombre</label>

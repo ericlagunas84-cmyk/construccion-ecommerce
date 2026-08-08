@@ -6,7 +6,7 @@ import { deleteProduct, toggleFeatured, toggleVisible, duplicateProduct } from "
 export default async function AdminProductosPage() {
   const products = await prisma.product.findMany({
     orderBy: { createdAt: "desc" },
-    include: { category: true },
+    include: { category: true, _count: { select: { orderItems: true } } },
   });
 
   return (
@@ -81,11 +81,20 @@ export default async function AdminProductosPage() {
                         Duplicar
                       </button>
                     </form>
-                    <form action={deleteProduct.bind(null, p.id)}>
-                      <button className="text-xs font-medium text-red-600 hover:underline">
+                    {p._count.orderItems === 0 ? (
+                      <form action={deleteProduct.bind(null, p.id)}>
+                        <button className="text-xs font-medium text-red-600 hover:underline">
+                          Eliminar
+                        </button>
+                      </form>
+                    ) : (
+                      <span
+                        className="text-xs text-brand-ink-soft"
+                        title={`No se puede eliminar: tiene ${p._count.orderItems} pedido(s) asociado(s). Usa "Ocultar" en su lugar.`}
+                      >
                         Eliminar
-                      </button>
-                    </form>
+                      </span>
+                    )}
                   </div>
                 </td>
               </tr>

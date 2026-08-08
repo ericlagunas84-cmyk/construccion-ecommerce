@@ -34,6 +34,7 @@ export async function createProduct(formData: FormData) {
   const compareAtPriceRaw = formData.get("compareAtPrice");
   const stock = Number(formData.get("stock") ?? 0);
   const featured = formData.get("featured") === "on";
+  const imageUrl = String(formData.get("imageUrl") ?? "").trim();
 
   if (!name || !sku || !categorySlug || !brandName || !price) {
     throw new Error("Faltan campos requeridos");
@@ -54,6 +55,7 @@ export async function createProduct(formData: FormData) {
       availability: stock > 0 ? "DISPONIBLE" : "AGOTADO",
       featured,
       visible: true,
+      imageUrl: imageUrl || null,
     },
   });
 
@@ -74,6 +76,7 @@ export async function updateProduct(id: string, formData: FormData) {
   const stock = Number(formData.get("stock") ?? 0);
   const featured = formData.get("featured") === "on";
   const visible = formData.get("visible") === "on";
+  const imageUrl = String(formData.get("imageUrl") ?? "").trim();
 
   if (!name || !categorySlug || !brandName || !price) {
     throw new Error("Faltan campos requeridos");
@@ -93,6 +96,7 @@ export async function updateProduct(id: string, formData: FormData) {
       availability: stock > 0 ? "DISPONIBLE" : "AGOTADO",
       featured,
       visible,
+      imageUrl: imageUrl || null,
     },
   });
 
@@ -103,6 +107,12 @@ export async function updateProduct(id: string, formData: FormData) {
 
 export async function deleteProduct(id: string) {
   await requireAdminSession();
+  const orderItemCount = await prisma.orderItem.count({ where: { productId: id } });
+  if (orderItemCount > 0) {
+    throw new Error(
+      `No se puede eliminar: este producto tiene ${orderItemCount} pedido(s) asociado(s), y borrarlo perdería ese historial. Usa "Ocultar" en su lugar para quitarlo del sitio sin afectar los pedidos.`
+    );
+  }
   await prisma.product.delete({ where: { id } });
   revalidatePath("/admin/productos");
 }
