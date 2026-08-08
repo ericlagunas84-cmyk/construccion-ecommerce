@@ -1,0 +1,38 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  h1, h2, h3, h4 {
+    @apply font-display;
+  }
+  :focus-visible {
+    outline: 2px solid theme("colors.brand.orange");
+    outline-offset: 2px;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    * {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+@layer components {
+  /* Firma visual: franja diagonal tipo cinta de medir / señalización de
+     obra. Se usa como divisor entre secciones — referencia literal al
+     mundo de la construcción sin caer en clichés de "hazard stripe". */
+  .measure-divider {
+    height: 6px;
+    background: repeating-linear-gradient(
+      -45deg,
+      theme("colors.brand.orange") 0px,
+      theme("colors.brand.orange") 14px,
+      theme("colors.brand.blue") 14px,
+      theme("colors.brand.blue") 28px
+    );
+    opacity: 0.9;
+  }
+}
