@@ -21,7 +21,7 @@ export default async function EditarProductoPage({ params }: { params: Promise<{
         ← Volver a productos
       </Link>
       <div className="mb-6 flex items-center justify-between">
-        <h1 className="text-2xl font-700 text-brand-ink">Editar producto</h1>
+        <h1 className="text-2xl font-bold text-brand-ink">Editar producto</h1>
         <span className="font-mono text-xs text-brand-ink-soft">SKU {product.sku}</span>
       </div>
 

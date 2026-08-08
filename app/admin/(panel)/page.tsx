@@ -49,7 +49,7 @@ export default async function AdminDashboardPage() {
 
   return (
     <div>
-      <h1 className="mb-6 text-2xl font-700 text-brand-ink">Dashboard</h1>
+      <h1 className="mb-6 text-2xl font-bold text-brand-ink">Dashboard</h1>
 
       <div className="mb-10 grid gap-4 sm:grid-cols-3 lg:grid-cols-5">
         {cards.map((c) => (

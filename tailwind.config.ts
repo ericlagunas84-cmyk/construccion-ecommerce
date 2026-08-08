@@ -28,14 +28,14 @@ const config: Config = {
         },
       },
       fontFamily: {
-        // Fuentes del sistema en vez de Google Fonts: se ven modernas y
-        // limpias igual, y el build no depende de descargar nada de
-        // internet (evita fallos de red durante el deploy en Vercel).
+        // Jost: alternativa libre a Futura (geométrica, redondeada) para
+        // toda la tipografía del sitio. El build no depende de descargar
+        // esta fuente — se carga en el navegador vía <link> en layout.tsx.
         display: [
-          "Poppins", "Segoe UI", "Roboto", "-apple-system", "BlinkMacSystemFont", "sans-serif",
+          "Jost", "Poppins", "Segoe UI", "-apple-system", "BlinkMacSystemFont", "sans-serif",
         ],
         body: [
-          "-apple-system", "BlinkMacSystemFont", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", "sans-serif",
+          "Jost", "-apple-system", "BlinkMacSystemFont", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", "sans-serif",
         ],
         mono: [
           "ui-monospace", "SFMono-Regular", "Menlo", "Consolas", "Liberation Mono", "monospace",

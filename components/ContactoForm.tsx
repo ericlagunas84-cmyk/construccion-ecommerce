@@ -39,7 +39,7 @@ export default function ContactoForm({ sucursales }: { sucursales: Sucursal[] })
           <span className="mb-2 block font-mono text-xs uppercase tracking-widest text-brand-orange">
             Contacto
           </span>
-          <h1 className="text-3xl font-700 text-brand-ink">Escríbenos</h1>
+          <h1 className="text-3xl font-bold text-brand-ink">Escríbenos</h1>
           <p className="mt-2 max-w-lg text-sm text-brand-ink-soft">
             ¿Dudas sobre un producto o tu pedido? Responde nuestro equipo, no un bot.
           </p>

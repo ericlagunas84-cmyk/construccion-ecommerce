@@ -13,7 +13,7 @@ export default async function AdminProductosPage() {
     <div>
       <div className="mb-6 flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-700 text-brand-ink">Productos</h1>
+          <h1 className="text-2xl font-bold text-brand-ink">Productos</h1>
           <p className="text-sm text-brand-ink-soft">{products.length} productos en catálogo</p>
         </div>
         <Link

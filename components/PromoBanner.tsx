@@ -8,7 +8,7 @@ export function PromoBanner() {
           <span className="mb-2 block font-mono text-xs uppercase tracking-widest text-white/80">
             Promoción de temporada
           </span>
-          <h3 className="text-2xl font-700">15% de descuento en impermeabilizantes</h3>
+          <h3 className="text-2xl font-bold">15% de descuento en impermeabilizantes</h3>
           <p className="mt-1 text-sm text-white/85">Válido antes de temporada de lluvias. Aplica en línea y en sucursal.</p>
         </div>
         <Link
@@ -28,7 +28,7 @@ export function CTASection() {
       <div className="measure-divider" />
       <section className="bg-brand-blue py-16 text-center text-white">
         <div className="mx-auto max-w-xl px-6">
-          <h3 className="mb-3 text-2xl font-700">¿Necesitas asesoría para tu proyecto?</h3>
+          <h3 className="mb-3 text-2xl font-bold">¿Necesitas asesoría para tu proyecto?</h3>
           <p className="mb-7 text-white/80">
             Cuéntanos qué estás construyendo y te ayudamos a elegir los materiales correctos.
           </p>

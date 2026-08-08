@@ -58,7 +58,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
             <span className="mb-2 block font-mono text-xs uppercase tracking-widest text-brand-orange">
               {product.brand}
             </span>
-            <h1 className="mb-2 text-2xl font-700 text-brand-ink md:text-3xl">{product.name}</h1>
+            <h1 className="mb-2 text-2xl font-bold text-brand-ink md:text-3xl">{product.name}</h1>
             <p className="mb-4 font-mono text-xs text-brand-ink-soft">SKU {product.sku}</p>
 
             <div className="mb-4 flex items-baseline gap-3 font-mono">
@@ -105,7 +105,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
         {/* Especificaciones y características */}
         <div className="mt-16 grid gap-10 md:grid-cols-2">
           <div>
-            <h2 className="mb-4 text-lg font-700 text-brand-ink">Especificaciones</h2>
+            <h2 className="mb-4 text-lg font-bold text-brand-ink">Especificaciones</h2>
             <dl className="divide-y divide-brand-line border-y border-brand-line text-sm">
               {product.specs.map((s) => (
                 <div key={s.label} className="flex justify-between py-3">
@@ -116,7 +116,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
             </dl>
           </div>
           <div>
-            <h2 className="mb-4 text-lg font-700 text-brand-ink">Descripción completa</h2>
+            <h2 className="mb-4 text-lg font-bold text-brand-ink">Descripción completa</h2>
             <p className="text-sm leading-relaxed text-brand-ink-soft">{product.description}</p>
           </div>
         </div>
@@ -124,7 +124,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
         {/* Relacionados */}
         {related.length > 0 && (
           <div className="mt-20">
-            <h2 className="mb-6 text-2xl font-700 text-brand-ink">Productos relacionados</h2>
+            <h2 className="mb-6 text-2xl font-bold text-brand-ink">Productos relacionados</h2>
             <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
               {related.map((p) => (
                 <ProductCard key={p.sku} product={p} />

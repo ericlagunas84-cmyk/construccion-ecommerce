@@ -10,7 +10,7 @@ export default async function AdminPedidosPage() {
 
   return (
     <div>
-      <h1 className="mb-1 text-2xl font-700 text-brand-ink">Pedidos</h1>
+      <h1 className="mb-1 text-2xl font-bold text-brand-ink">Pedidos</h1>
       <p className="mb-6 text-sm text-brand-ink-soft">{orders.length} pedidos totales</p>
 
       <div className="overflow-x-auto rounded-lg border border-brand-line bg-white">

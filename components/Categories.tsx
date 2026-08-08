@@ -10,7 +10,7 @@ export default async function Categories() {
         <span className="mb-2 block font-mono text-xs uppercase tracking-widest text-brand-orange">
           Categorías
         </span>
-        <h2 className="text-3xl font-700 text-brand-ink">Compra por línea de producto</h2>
+        <h2 className="text-3xl font-bold text-brand-ink">Compra por línea de producto</h2>
       </div>
 
       <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
@@ -23,7 +23,7 @@ export default async function Categories() {
             <div className="mb-5 flex h-32 items-center justify-center rounded-md bg-brand-blue-light text-xs font-mono text-brand-ink-soft">
               foto 800×600
             </div>
-            <h3 className="mb-1.5 font-display text-lg font-600 text-brand-ink">
+            <h3 className="mb-1.5 font-display text-lg font-semibold text-brand-ink">
               {cat.name}
             </h3>
             <p className="mb-4 text-sm text-brand-ink-soft">{cat.description}</p>

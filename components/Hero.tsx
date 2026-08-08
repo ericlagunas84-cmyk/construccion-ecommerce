@@ -20,7 +20,7 @@ export default function Hero() {
           <span className="mb-4 inline-block font-mono text-xs uppercase tracking-widest text-brand-orange">
             Entrega en 24–48 horas
           </span>
-          <h1 className="mb-5 max-w-lg text-4xl font-700 leading-[1.05] md:text-5xl">
+          <h1 className="mb-5 max-w-lg text-4xl font-bold leading-[1.05] md:text-5xl">
             Todo lo que tu obra necesita, en un solo lugar
           </h1>
           <p className="mb-8 max-w-md text-base text-white/85">

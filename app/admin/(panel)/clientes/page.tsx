@@ -9,7 +9,7 @@ export default async function AdminClientesPage() {
 
   return (
     <div>
-      <h1 className="mb-1 text-2xl font-700 text-brand-ink">Clientes</h1>
+      <h1 className="mb-1 text-2xl font-bold text-brand-ink">Clientes</h1>
       <p className="mb-6 text-sm text-brand-ink-soft">{customers.length} clientes registrados</p>
 
       <div className="overflow-x-auto rounded-lg border border-brand-line bg-white">

@@ -47,7 +47,7 @@ export default function RegistroPage() {
     <>
       <Header />
       <main className="mx-auto flex min-h-[70vh] max-w-md flex-col justify-center px-6 py-16">
-        <h1 className="mb-2 text-2xl font-700 text-brand-ink">Crea tu cuenta</h1>
+        <h1 className="mb-2 text-2xl font-bold text-brand-ink">Crea tu cuenta</h1>
         <p className="mb-8 text-sm text-brand-ink-soft">
           Guarda tus datos para comprar más rápido y ver tu historial de pedidos.
         </p>

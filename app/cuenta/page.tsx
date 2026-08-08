@@ -36,13 +36,13 @@ export default async function CuentaPage() {
             <span className="mb-2 block font-mono text-xs uppercase tracking-widest text-brand-orange">
               Mi cuenta
             </span>
-            <h1 className="text-2xl font-700 text-brand-ink">{user?.name}</h1>
+            <h1 className="text-2xl font-bold text-brand-ink">{user?.name}</h1>
             <p className="text-sm text-brand-ink-soft">{user?.email}</p>
           </div>
           <SignOutButton />
         </div>
 
-        <h2 className="mb-4 text-lg font-700 text-brand-ink">Historial de pedidos</h2>
+        <h2 className="mb-4 text-lg font-bold text-brand-ink">Historial de pedidos</h2>
 
         {orders.length === 0 ? (
           <div className="rounded-lg border border-dashed border-brand-line py-16 text-center text-sm text-brand-ink-soft">

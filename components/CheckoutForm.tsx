@@ -84,7 +84,7 @@ export default function CheckoutForm({ sucursales }: { sucursales: Sucursal[] })
               <path d="M20 6 9 17l-5-5" />
             </svg>
           </div>
-          <h1 className="mb-3 text-2xl font-700 text-brand-ink">¡Pedido recibido!</h1>
+          <h1 className="mb-3 text-2xl font-bold text-brand-ink">¡Pedido recibido!</h1>
           <p className="mb-2 font-mono text-sm text-brand-ink">Folio: {orderNumber}</p>
           <p className="mb-8 text-sm text-brand-ink-soft">
             Tu pedido ya quedó guardado y aparece en el panel administrativo con estado
@@ -126,7 +126,7 @@ export default function CheckoutForm({ sucursales }: { sucursales: Sucursal[] })
     <>
       <Header />
       <main className="mx-auto max-w-5xl px-6 py-10">
-        <h1 className="mb-8 text-3xl font-700 text-brand-ink">Checkout</h1>
+        <h1 className="mb-8 text-3xl font-bold text-brand-ink">Checkout</h1>
 
         <form onSubmit={handleSubmit} className="grid gap-10 md:grid-cols-[1fr_320px]">
           <div className="space-y-8">

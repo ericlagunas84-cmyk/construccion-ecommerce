@@ -36,7 +36,7 @@ export default function Benefits() {
                 {b.icon}
               </svg>
             </div>
-            <h3 className="font-display text-base font-600 text-brand-ink">{b.title}</h3>
+            <h3 className="font-display text-base font-semibold text-brand-ink">{b.title}</h3>
             <p className="text-sm text-brand-ink-soft">{b.desc}</p>
           </div>
         ))}

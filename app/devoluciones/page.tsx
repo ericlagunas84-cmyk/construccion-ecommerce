@@ -32,7 +32,7 @@ export default function DevolucionesPage() {
 
       <h2>Cómo solicitar una devolución</h2>
       <ul>
-        <li>Escríbenos a devoluciones@construexpress.mx con tu número de pedido</li>
+        <li>Escríbenos a devoluciones@epoxydepot.mx con tu número de pedido</li>
         <li>Te confirmamos si aplica devolución, cambio o reembolso</li>
         <li>Coordinamos recolección a domicilio o entrega en sucursal</li>
       </ul>

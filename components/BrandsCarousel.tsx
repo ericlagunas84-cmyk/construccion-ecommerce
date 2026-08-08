@@ -19,7 +19,7 @@ export default function BrandsCarousel({ brands }: { brands: Brand[] }) {
           {loop.map((b, i) => (
             <span
               key={`${b.name}-${i}`}
-              className="font-display text-xl font-600 text-brand-ink-soft/60"
+              className="font-display text-xl font-semibold text-brand-ink-soft/60"
             >
               {b.name}
             </span>

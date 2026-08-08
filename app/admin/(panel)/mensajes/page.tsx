@@ -7,7 +7,7 @@ export default async function AdminMensajesPage() {
 
   return (
     <div>
-      <h1 className="mb-1 text-2xl font-700 text-brand-ink">Mensajes de contacto</h1>
+      <h1 className="mb-1 text-2xl font-bold text-brand-ink">Mensajes de contacto</h1>
       <p className="mb-6 text-sm text-brand-ink-soft">
         {messages.length} mensajes recibidos
         {unreadCount > 0 && <span className="ml-2 font-medium text-brand-orange">· {unreadCount} sin leer</span>}

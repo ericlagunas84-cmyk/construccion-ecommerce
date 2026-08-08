@@ -9,7 +9,7 @@ export default async function AdminMarcasPage() {
 
   return (
     <div>
-      <h1 className="mb-1 text-2xl font-700 text-brand-ink">Marcas</h1>
+      <h1 className="mb-1 text-2xl font-bold text-brand-ink">Marcas</h1>
       <p className="mb-6 text-sm text-brand-ink-soft">{brands.length} marcas</p>
 
       <div className="grid gap-8 md:grid-cols-[1fr_320px]">

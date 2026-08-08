@@ -13,7 +13,7 @@ export default async function NuevoProductoPage() {
       <Link href="/admin/productos" className="mb-4 inline-block text-xs font-medium text-brand-blue hover:underline">
         ← Volver a productos
       </Link>
-      <h1 className="mb-6 text-2xl font-700 text-brand-ink">Nuevo producto</h1>
+      <h1 className="mb-6 text-2xl font-bold text-brand-ink">Nuevo producto</h1>
 
       <form action={createProduct} className="space-y-5 rounded-lg border border-brand-line bg-white p-6">
         <div className="grid gap-4 sm:grid-cols-2">

@@ -13,7 +13,7 @@ export default async function FeaturedProducts() {
             <span className="mb-2 block font-mono text-xs uppercase tracking-widest text-brand-orange">
               Destacados
             </span>
-            <h2 className="text-3xl font-700 text-brand-ink">Productos destacados</h2>
+            <h2 className="text-3xl font-bold text-brand-ink">Productos destacados</h2>
           </div>
           <Link href="/catalogo" className="hidden text-sm font-semibold text-brand-blue hover:text-brand-orange md:block">
             Ver catálogo completo →

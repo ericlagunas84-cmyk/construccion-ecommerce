@@ -64,7 +64,7 @@ export default function CatalogoClient({
         <span className="mb-2 block font-mono text-xs uppercase tracking-widest text-brand-orange">
           Catálogo
         </span>
-        <h1 className="text-3xl font-700 text-brand-ink">Todos los productos</h1>
+        <h1 className="text-3xl font-bold text-brand-ink">Todos los productos</h1>
         <p className="mt-1 text-sm text-brand-ink-soft">{filtered.length} productos encontrados</p>
       </div>
 
