@@ -4,8 +4,8 @@ export default function PrivacidadPage() {
   return (
     <LegalPage title="Aviso de privacidad" updated="Febrero 2026">
       <p>
-        ConstruExpress ("nosotros"), con domicilio para efectos de este aviso en Av. Juárez 120,
-        Centro, es responsable del tratamiento de tus datos personales conforme a la Ley Federal
+        Epoxy Depot ("nosotros"), con domicilio para efectos de este aviso en Paseo de las Liebres
+        404, es responsable del tratamiento de tus datos personales conforme a la Ley Federal
         de Protección de Datos Personales en Posesión de los Particulares (LFPDPPP).
       </p>
 
@@ -33,13 +33,13 @@ export default function PrivacidadPage() {
       <p>
         Compartimos los datos estrictamente necesarios con paqueterías (para la entrega) y con
         Mercado Pago (para el procesamiento del pago). No vendemos ni rentamos tus datos a
-        terceros con fines de mercadotecnia ajenos a ConstruExpress.
+        terceros con fines de mercadotecnia ajenos a Epoxy Depot.
       </p>
 
       <h2>Derechos ARCO</h2>
       <p>
         Puedes solicitar en cualquier momento el Acceso, Rectificación, Cancelación u Oposición
-        (derechos ARCO) al tratamiento de tus datos, escribiendo a privacidad@construexpress.mx
+        (derechos ARCO) al tratamiento de tus datos, escribiendo a privacidad@epoxydepot.mx
         con copia de identificación oficial. Responderemos en un plazo máximo de 20 días
         hábiles conforme a la ley.
       </p>
