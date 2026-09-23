@@ -13,7 +13,7 @@ export default async function PanelLayout({ children }: { children: React.ReactN
 
   return (
     <div className="flex min-h-screen bg-brand-blue-light/40">
-      <AdminSidebar />
+      <AdminSidebar role={session.user?.role} />
       <div className="flex-1">
         <AdminTopbar user={session.user} />
         <main className="p-8">{children}</main>

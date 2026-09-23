@@ -57,8 +57,13 @@ async function getStats() {
   };
 }
 
-export default async function AdminDashboardPage() {
+export default async function AdminDashboardPage({
+  searchParams,
+}: {
+  searchParams?: { [key: string]: string | string[] | undefined };
+}) {
   const stats = await getStats();
+  const sinAcceso = searchParams?.sinacceso === "1";
 
   const cards = [
     { label: "Ventas del día", value: money(stats.salesToday) },
@@ -82,6 +87,12 @@ export default async function AdminDashboardPage() {
   return (
     <div>
       <h1 className="mb-6 text-2xl font-bold text-brand-ink">Dashboard</h1>
+
+      {sinAcceso && (
+        <div className="mb-6 rounded-md border border-amber-200 bg-amber-50 px-4 py-3 text-sm font-medium text-amber-800">
+          Tu usuario no tiene permiso para ver esa sección.
+        </div>
+      )}
 
       {alerts.length > 0 && (
         <div className="mb-6 flex flex-wrap gap-3">

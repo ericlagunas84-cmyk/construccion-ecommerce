@@ -1,4 +1,4 @@
-# ConstruExpress — Fase 1 (completa) + Fase 2 en marcha
+# Epoxy Depot — Fase 1 (completa) + Fase 2 en marcha
 
 Ecommerce construido con Next.js 15 (App Router), TypeScript, Tailwind CSS,
 Prisma + PostgreSQL, y NextAuth. Sistema de diseño: azul de marca + gris
@@ -21,7 +21,7 @@ Abre http://localhost:3000 para el sitio, y http://localhost:3000/admin/login
 para el panel administrativo.
 
 **Usuario administrador de prueba** (creado por el seed):
-- Correo: `admin@construexpress.mx`
+- Correo: `admin@epoxydepot.mx`
 - Contraseña: `Admin123!`
 
 ⚠️ Cambia esta contraseña antes de usar el proyecto en producción.
@@ -95,6 +95,38 @@ depender de ningún servicio externo:
 - **Clientes** (`/admin/clientes`) — listado con historial y total comprado
 - **Mensajes** (`/admin/mensajes`) — mensajes reales del formulario de
   Contacto, con indicador de "Nuevo" y marcar como leído/no leído
+- **Usuarios** (`/admin/usuarios`, solo Administrador) — crear cuentas de
+  staff y asignar rol (ver "Roles y permisos" abajo)
+- **Banners** (`/admin/banners`) — CMS básico para el hero de inicio y la
+  franja de promoción, sin tocar código (ver "Banners y promociones" abajo)
+
+### Roles y permisos (`lib/permissions.ts`, `middleware.ts`)
+Cada cuenta de staff tiene un rol que decide qué secciones del panel puede
+ver. La aplicación se hace en `middleware.ts`: si alguien intenta abrir una
+URL de `/admin/...` que su rol no tiene permitida, se le redirige al
+dashboard con un aviso — no depende de que el menú lateral esconda el link.
+
+| Rol | Acceso |
+|---|---|
+| **Administrador general** | Todo el panel, incluida la gestión de usuarios |
+| **Empleado** | Acceso total (rol genérico heredado de versiones anteriores) |
+| **Almacenista / Logística** | Productos, Categorías, Marcas, Pedidos |
+| **Vendedor / Atención al cliente** | Pedidos, Clientes, Mensajes, Reseñas, Newsletter, Cupones, Banners |
+| **Cliente** | Sin acceso al panel |
+
+Un administrador crea las cuentas de Almacenista y Vendedor desde
+`/admin/usuarios` — no requiere tocar la base de datos ni el código.
+
+### Banners y promociones (`/admin/banners`)
+CMS básico para dos zonas de la página de inicio:
+- **Portada (hero)** — el banner grande de arriba del todo, con título,
+  subtítulo, imagen de fondo y botón.
+- **Franja de promoción** — la franja naranja debajo del carrusel de marcas.
+
+Cada banner se puede activar/desactivar, programar con fecha de inicio y
+fin, y ordenar. Si no hay ningún banner activo en una zona, el sitio
+muestra el contenido por defecto (nunca queda una sección vacía). Las
+imágenes se suben igual que las de producto, vía Vercel Blob.
 
 ### Checkout — ya crea pedidos reales (`lib/actions/checkout.ts`)
 Al enviar el formulario de checkout:
@@ -153,8 +185,8 @@ formulario de checkout, que no tiene tabla propia).
 
 ## Renombrar la marca
 
-El proyecto usa **"ConstruExpress"** como nombre temporal.
-1. Busca "ConstruExpress" en `components/Header.tsx`, `components/Footer.tsx`,
+El proyecto usa **"Epoxy Depot"** como nombre temporal.
+1. Busca "Epoxy Depot" en `components/Header.tsx`, `components/Footer.tsx`,
    `app/layout.tsx` y `app/admin/login/page.tsx`
 2. Ajusta los colores en `tailwind.config.ts` si tu marca usa otros tonos
 3. Actualiza `lib/mock-data.ts` y `prisma/seed.ts` con tus datos reales
@@ -172,7 +204,7 @@ Nginx, ni PM2 como en un VPS.
 ```bash
 # El proyecto ya viene con git inicializado y el primer commit hecho.
 # Solo crea el repo en GitHub (vacío, sin README) y conéctalo:
-git remote add origin https://github.com/TU-USUARIO/construexpress.git
+git remote add origin https://github.com/ericlagunas84-cmyk/construccion-ecommerce.git
 git branch -M main
 git push -u origin main
 ```
@@ -201,7 +233,7 @@ En el proyecto de Vercel → **Settings → Environment Variables**, agrega:
 |---|---|
 | `DATABASE_URL` | La cadena de conexión de Neon/Supabase |
 | `NEXTAUTH_SECRET` | Genera uno con `openssl rand -base64 32` |
-| `NEXTAUTH_URL` | La URL que te da Vercel, ej. `https://construexpress.vercel.app` |
+| `NEXTAUTH_URL` | La URL que te da Vercel, ej. `https://epoxydepot.vercel.app` |
 
 ### 5. Despliega
 
@@ -218,7 +250,7 @@ DATABASE_URL="la-misma-url-de-produccion" npm run db:seed
 ```
 
 Esto crea el catálogo, sucursales, y tu usuario admin de prueba
-(`admin@construexpress.mx` / `Admin123!` — **cámbiala de inmediato**
+(`admin@epoxydepot.mx` / `Admin123!` — **cámbiala de inmediato**
 desde `/admin` una vez que tengas login real, o edítala directo en la
 base de datos).
 

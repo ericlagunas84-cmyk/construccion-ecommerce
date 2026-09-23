@@ -14,7 +14,14 @@ datasource db {
 enum Role {
   ADMIN
   EMPLEADO
+  ALMACENISTA
+  VENDEDOR
   CLIENTE
+}
+
+enum BannerPlacement {
+  HERO
+  PROMO
 }
 
 enum OrderStatus {
@@ -215,4 +222,22 @@ model OrderItem {
   product   Product @relation(fields: [productId], references: [id])
   qty       Int
   unitPrice Decimal @db.Decimal(10, 2)
+}
+
+// Banners y promociones editables desde el panel — CMS básico para que el
+// admin actualice anuncios sin tocar código.
+model Banner {
+  id         String          @id @default(cuid())
+  placement  BannerPlacement @default(PROMO)
+  title      String
+  subtitle   String?
+  imageUrl   String?
+  ctaText    String?
+  ctaUrl     String?
+  active     Boolean         @default(true)
+  sortOrder  Int             @default(0)
+  startsAt   DateTime?
+  endsAt     DateTime?
+  createdAt  DateTime        @default(now())
+  updatedAt  DateTime        @updatedAt
 }
