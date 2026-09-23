@@ -3,15 +3,16 @@
 import Link from "next/link";
 import { signOut } from "next-auth/react";
 import type { Session } from "next-auth";
+import { ROLE_LABELS, type StaffRole } from "@/lib/permissions";
 
 export default function AdminTopbar({ user }: { user: Session["user"] }) {
+  const role = (user as { role?: string })?.role as StaffRole | undefined;
+
   return (
     <header className="flex items-center justify-end gap-4 border-b border-brand-line bg-white px-8 py-4">
       <Link href="/admin/perfil" className="text-right hover:opacity-75">
         <p className="text-sm font-medium text-brand-ink">{user?.name}</p>
-        <p className="text-xs text-brand-ink-soft">
-          {(user as { role?: string })?.role === "ADMIN" ? "Administrador" : "Empleado"}
-        </p>
+        <p className="text-xs text-brand-ink-soft">{role ? ROLE_LABELS[role] : "Staff"}</p>
       </Link>
       <button
         onClick={() => signOut({ callbackUrl: "/admin/login" })}

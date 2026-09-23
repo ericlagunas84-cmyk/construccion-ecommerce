@@ -1,9 +1,24 @@
 "use client";
 
 import { useState } from "react";
-import { uploadProductImage } from "@/lib/actions/upload";
+import { uploadProductImage, uploadBannerImage } from "@/lib/actions/upload";
 
-export default function ImageUploadField({ initialUrl }: { initialUrl?: string }) {
+const ACTIONS = {
+  producto: uploadProductImage,
+  banner: uploadBannerImage,
+} as const;
+
+export default function ImageUploadField({
+  initialUrl,
+  kind = "producto",
+  label,
+  fieldName = "imageUrl",
+}: {
+  initialUrl?: string;
+  kind?: keyof typeof ACTIONS;
+  label?: string;
+  fieldName?: string;
+}) {
   const [imageUrl, setImageUrl] = useState(initialUrl ?? "");
   const [uploading, setUploading] = useState(false);
   const [error, setError] = useState("");
@@ -17,7 +32,7 @@ export default function ImageUploadField({ initialUrl }: { initialUrl?: string }
     try {
       const formData = new FormData();
       formData.append("file", file);
-      const result = await uploadProductImage(formData);
+      const result = await ACTIONS[kind](formData);
       setImageUrl(result.url);
     } catch (err) {
       setError(err instanceof Error ? err.message : "No se pudo subir la imagen.");
@@ -29,7 +44,9 @@ export default function ImageUploadField({ initialUrl }: { initialUrl?: string }
 
   return (
     <div>
-      <label className="mb-1.5 block text-xs font-medium text-brand-ink-soft">Foto del producto</label>
+      <label className="mb-1.5 block text-xs font-medium text-brand-ink-soft">
+        {label ?? (kind === "banner" ? "Imagen del banner" : "Foto del producto")}
+      </label>
 
       <div className="flex items-start gap-4">
         <div className="flex h-28 w-28 shrink-0 items-center justify-center overflow-hidden rounded-md border border-brand-line bg-brand-blue-light">
@@ -58,7 +75,7 @@ export default function ImageUploadField({ initialUrl }: { initialUrl?: string }
       </div>
 
       {/* Este input oculto es el que en realidad viaja con el formulario */}
-      <input type="hidden" name="imageUrl" value={imageUrl} />
+      <input type="hidden" name={fieldName} value={imageUrl} />
     </div>
   );
 }
