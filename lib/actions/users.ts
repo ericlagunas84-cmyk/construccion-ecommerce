@@ -36,7 +36,7 @@ export async function createStaffUser(formData: FormData) {
   if (password.length < 8) {
     throw new Error("La contraseña debe tener al menos 8 caracteres.");
   }
-  if (!isStaffRole(role) || role === "CLIENTE") {
+  if (!isStaffRole(role)) {
     throw new Error("Rol inválido.");
   }
 
@@ -58,7 +58,7 @@ export async function updateStaffUserRole(id: string, formData: FormData) {
   const session = await requireAdmin();
 
   const role = String(formData.get("role") ?? "");
-  if (!isStaffRole(role) || role === "CLIENTE") {
+  if (!isStaffRole(role)) {
     throw new Error("Rol inválido.");
   }
 
