@@ -7,7 +7,7 @@ import { authOptions } from "@/lib/auth";
 const MAX_SIZE_BYTES = 5 * 1024 * 1024; // 5 MB
 const ALLOWED_TYPES = ["image/jpeg", "image/png", "image/webp", "image/avif"];
 
-export async function uploadProductImage(formData: FormData) {
+async function uploadImage(formData: FormData, folder: string) {
   const session = await getServerSession(authOptions);
   if (!session) throw new Error("No autenticado");
 
@@ -23,7 +23,7 @@ export async function uploadProductImage(formData: FormData) {
   }
 
   const safeName = file.name.replace(/[^a-zA-Z0-9.\-_]/g, "-").toLowerCase();
-  const key = `productos/${Date.now()}-${safeName}`;
+  const key = `${folder}/${Date.now()}-${safeName}`;
 
   const blob = await put(key, file, {
     access: "public",
@@ -31,4 +31,12 @@ export async function uploadProductImage(formData: FormData) {
   });
 
   return { url: blob.url };
+}
+
+export async function uploadProductImage(formData: FormData) {
+  return uploadImage(formData, "productos");
+}
+
+export async function uploadBannerImage(formData: FormData) {
+  return uploadImage(formData, "banners");
 }
