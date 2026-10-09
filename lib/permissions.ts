@@ -27,6 +27,7 @@ export const ROLE_LABELS: Record<StaffRole, string> = {
 // cualquier rol de staff.
 export const ADMIN_ROUTE_ACCESS: { prefix: string; roles: StaffRole[] }[] = [
   { prefix: "/admin/usuarios", roles: ["ADMIN"] },
+  { prefix: "/admin/importar-catalogo", roles: ["ADMIN"] },
   { prefix: "/admin/productos", roles: ["ADMIN", "EMPLEADO", "ALMACENISTA"] },
   { prefix: "/admin/categorias", roles: ["ADMIN", "EMPLEADO", "ALMACENISTA"] },
   { prefix: "/admin/marcas", roles: ["ADMIN", "EMPLEADO", "ALMACENISTA"] },
@@ -42,7 +43,9 @@ export const ADMIN_ROUTE_ACCESS: { prefix: string; roles: StaffRole[] }[] = [
 
 export function canAccessAdminPath(role: string | undefined, pathname: string): boolean {
   if (!role || !STAFF_ROLES.includes(role as StaffRole)) return false;
-  if (role === "ADMIN" || role === "EMPLEADO") return true;
+  if (role === "ADMIN") return true;
+  // EMPLEADO aparece en todas las reglas excepto las de solo-ADMIN
+  // (usuarios, importar catálogo), así que conserva su acceso amplio.
 
   const rule = ADMIN_ROUTE_ACCESS.find((r) => pathname.startsWith(r.prefix));
   if (!rule) return true; // rutas sin regla explícita (dashboard, perfil) son abiertas a todo el staff

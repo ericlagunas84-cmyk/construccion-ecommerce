@@ -14,6 +14,7 @@ const nav = [
   { href: "/admin/mensajes", label: "Mensajes", icon: "M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" },
   { href: "/admin/newsletter", label: "Newsletter", icon: "M4 4h16v16H4zM4 6l8 7 8-7" },
   { href: "/admin/usuarios", label: "Usuarios", icon: "M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM20 8v6M23 11h-6" },
+  { href: "/admin/importar-catalogo", label: "Importar catálogo", icon: "M12 3v12M7 10l5 5 5-5M5 21h14" },
 ];
 
 export default function AdminSidebar({ role }: { role?: string }) {

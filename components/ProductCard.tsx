@@ -5,6 +5,7 @@ import { useState } from "react";
 import type { Product } from "@/lib/types";
 import { useCart } from "@/lib/cart-context";
 import { money } from "@/lib/format";
+import { isQuoteOnly, whatsappQuoteUrl } from "@/lib/whatsapp";
 
 const availabilityLabel: Record<Product["availability"], string> = {
   disponible: "Disponible",
@@ -21,6 +22,7 @@ const availabilityColor: Record<Product["availability"], string> = {
 export default function ProductCard({ product }: { product: Product }) {
   const { addItem } = useCart();
   const [added, setAdded] = useState(false);
+  const quoteOnly = isQuoteOnly(product);
 
   function handleBuy() {
     addItem(product, 1);
@@ -52,21 +54,38 @@ export default function ProductCard({ product }: { product: Product }) {
         </Link>
         <p className="mb-3 text-xs text-brand-ink-soft line-clamp-2">{product.shortDescription}</p>
         <div className="mb-4 mt-auto flex items-baseline gap-2 font-mono">
-          <span className="text-lg font-medium text-brand-ink">{money(product.price)}</span>
-          {product.compareAtPrice && (
-            <span className="text-xs text-brand-ink-soft line-through">
-              {money(product.compareAtPrice)}
-            </span>
+          {quoteOnly ? (
+            <span className="text-sm font-semibold text-brand-blue">Precio a cotizar</span>
+          ) : (
+            <>
+              <span className="text-lg font-medium text-brand-ink">{money(product.price)}</span>
+              {product.compareAtPrice && (
+                <span className="text-xs text-brand-ink-soft line-through">
+                  {money(product.compareAtPrice)}
+                </span>
+              )}
+            </>
           )}
         </div>
         <div className="flex gap-2">
-          <button
-            disabled={product.availability === "agotado"}
-            onClick={handleBuy}
-            className="flex-1 rounded-md bg-brand-orange py-2.5 text-xs font-semibold uppercase tracking-wide text-white transition hover:bg-brand-orange-dark disabled:cursor-not-allowed disabled:bg-brand-line disabled:text-brand-ink-soft"
-          >
-            {added ? "Agregado ✓" : "Comprar"}
-          </button>
+          {quoteOnly ? (
+            <a
+              href={whatsappQuoteUrl(product)}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex-1 rounded-md bg-brand-orange py-2.5 text-center text-xs font-semibold uppercase tracking-wide text-white transition hover:bg-brand-orange-dark"
+            >
+              Cotizar
+            </a>
+          ) : (
+            <button
+              disabled={product.availability === "agotado"}
+              onClick={handleBuy}
+              className="flex-1 rounded-md bg-brand-orange py-2.5 text-xs font-semibold uppercase tracking-wide text-white transition hover:bg-brand-orange-dark disabled:cursor-not-allowed disabled:bg-brand-line disabled:text-brand-ink-soft"
+            >
+              {added ? "Agregado ✓" : "Comprar"}
+            </button>
+          )}
           <Link
             href={`/producto/${product.slug}`}
             className="flex-1 rounded-md border border-brand-line py-2.5 text-center text-xs font-semibold uppercase tracking-wide text-brand-ink transition hover:border-brand-blue"

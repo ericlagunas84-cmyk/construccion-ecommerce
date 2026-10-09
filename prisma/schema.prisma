@@ -131,6 +131,13 @@ model Product {
   hasTechSheet      Boolean      @default(false)
   techSheetUrl      String?
   imageUrl          String?
+  // Fotos adicionales del producto (la principal sigue en imageUrl).
+  gallery           String[]     @default([])
+  // Página oficial del fabricante cuando no hay PDF de ficha técnica.
+  manufacturerUrl   String?
+  // Notas solo para el panel admin (estado documental, observaciones del
+  // catálogo técnico, etc.). Nunca se muestran en el sitio público.
+  internalNotes     String?
   tags              String[]     @default([])
   soldCount         Int          @default(0)
   createdAt         DateTime     @default(now())

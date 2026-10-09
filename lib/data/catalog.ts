@@ -31,6 +31,8 @@ function toProduct(
     hasTechSheet: p.hasTechSheet,
     techSheetUrl: p.techSheetUrl ?? undefined,
     imageUrl: p.imageUrl ?? undefined,
+    gallery: p.gallery ?? [],
+    manufacturerUrl: p.manufacturerUrl ?? undefined,
     soldCount: p.soldCount,
     createdAt: p.createdAt.toISOString(),
   };

@@ -19,6 +19,8 @@ export type Product = {
   hasTechSheet: boolean;
   techSheetUrl?: string;
   imageUrl?: string;
+  gallery?: string[];
+  manufacturerUrl?: string;
   soldCount: number;
   createdAt: string;
 };

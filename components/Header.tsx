@@ -5,16 +5,12 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 import { useCart } from "@/lib/cart-context";
+import { CATALOG_CATEGORIES } from "@/lib/catalog-categories";
 
-const productCategories = [
-  { label: "Densificadores, Selladores y Limpieza", href: "/catalogo?cat=densificadores-limpieza" },
-  { label: "Recubrimientos y Adhesivos Epóxicos", href: "/catalogo?cat=recubrimientos-epoxicos" },
-  { label: "Pigmentos", href: "/catalogo?cat=pigmentos" },
-  { label: "Autonivelantes", href: "/catalogo?cat=autonivelantes" },
-  { label: "Uretanos y Poliaspárticos", href: "/catalogo?cat=uretanos-poliaspartico" },
-  { label: "Primarios", href: "/catalogo?cat=primarios" },
-  { label: "Juntas, Sellado y Anclaje", href: "/catalogo?cat=juntas-sellado-anclaje" },
-];
+const productCategories = CATALOG_CATEGORIES.map((c) => ({
+  label: c.name,
+  href: `/catalogo?cat=${c.slug}`,
+}));
 
 const WhatsAppIcon = ({ className = "" }: { className?: string }) => (
   <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" className={className}>

@@ -117,6 +117,38 @@ dashboard con un aviso — no depende de que el menú lateral esconda el link.
 Un administrador crea las cuentas de Almacenista y Vendedor desde
 `/admin/usuarios` — no requiere tocar la base de datos ni el código.
 
+### Catálogo oficial (`/admin/importar-catalogo`, solo Administrador)
+El catálogo vive en `lib/data/catalogo-epoxydepot.json` (127 productos) y se
+generó uniendo:
+- `EpoxyDepot_Catalogo_Dashboard.xlsx` (consulta 07/10/2026): SKU, nombre,
+  fabricante, modelo oficial, características completas, información
+  adicional del fabricante, ficha técnica PDF y estado documental
+- epoxydepot.mx (sitio WordPress anterior): precio, precio tachado, fotos
+  (hasta 3 por producto) y categorías
+
+El botón de `/admin/importar-catalogo` (pide escribir BORRAR) borra en una
+sola transacción los pedidos de prueba, reseñas, productos, categorías y
+marcas, y carga el catálogo. Si algo falla no se borra nada.
+
+Reglas de la carga:
+- Las 7 categorías están en `lib/catalog-categories.ts` (también las usa el
+  menú "Productos" del Header)
+- Productos sin precio en el sitio anterior (14 máquinas y Color Fast
+  Coating) se muestran como **"Precio a cotizar"** con botón de WhatsApp; el
+  checkout rechaza en el servidor cualquier producto con precio 0
+- Ficha técnica pública solo cuando el catálogo marca "PDF oficial
+  localizado"; si no, se enlaza la página web del fabricante cuando está
+  confirmada. Lo demás (PDF por confirmar, observaciones, estado documental)
+  queda en **notas internas**, visibles solo en la edición del producto
+- El archivo no trae inventario: se carga una existencia inicial de 100
+  piezas (`DEFAULT_STOCK`) que se ajusta por producto en el panel
+- "Color Fast Coating" no tenía SKU (N/A) → `CONV-COLORFAST`
+- Las fotos se cargan desde `epoxydepot.mx/wp-content/uploads/…`; si se da
+  de baja el WordPress anterior hay que migrarlas a Vercel Blob
+
+`npm run db:seed` usa el mismo catálogo pero sin borrar nada (solo agrega lo
+que falte).
+
 ### Banners y promociones (`/admin/banners`)
 CMS básico para dos zonas de la página de inicio:
 - **Portada (hero)** — el banner grande de arriba del todo, con título,

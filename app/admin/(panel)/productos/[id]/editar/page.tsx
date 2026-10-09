@@ -57,6 +57,7 @@ export default async function EditarProductoPage({ params }: { params: Promise<{
           <div>
             <label className="mb-1.5 block text-xs font-medium text-brand-ink-soft">Precio</label>
             <input name="price" type="number" min={0} step="0.01" required defaultValue={Number(product.price)} className="w-full rounded-md border border-brand-line px-3 py-2.5 text-sm focus:border-brand-blue focus:outline-none" />
+            <p className="mt-1 text-[11px] text-brand-ink-soft">Pon 0 para mostrarlo como “Precio a cotizar” (botón de WhatsApp).</p>
           </div>
           <div>
             <label className="mb-1.5 block text-xs font-medium text-brand-ink-soft">Precio oferta (opcional)</label>
@@ -98,6 +99,30 @@ export default async function EditarProductoPage({ params }: { params: Promise<{
           Guardar cambios
         </button>
       </form>
+
+      {(product.internalNotes || product.gallery.length > 0 || product.techSheetUrl || product.manufacturerUrl) && (
+        <div className="mt-6 space-y-3 rounded-lg border border-dashed border-brand-line bg-brand-blue-light/30 p-5 text-xs text-brand-ink-soft">
+          <h2 className="text-xs font-semibold uppercase tracking-wide text-brand-ink">Datos del catálogo técnico (solo admin)</h2>
+          {product.gallery.length > 0 && <p>{product.gallery.length} foto(s) en la galería del producto.</p>}
+          {product.techSheetUrl && (
+            <p>
+              Ficha técnica PDF:{" "}
+              <a href={product.techSheetUrl} target="_blank" rel="noopener noreferrer" className="break-all text-brand-blue underline">
+                {product.techSheetUrl}
+              </a>
+            </p>
+          )}
+          {product.manufacturerUrl && (
+            <p>
+              Página del fabricante:{" "}
+              <a href={product.manufacturerUrl} target="_blank" rel="noopener noreferrer" className="break-all text-brand-blue underline">
+                {product.manufacturerUrl}
+              </a>
+            </p>
+          )}
+          {product.internalNotes && <p className="whitespace-pre-line">{product.internalNotes}</p>}
+        </div>
+      )}
     </div>
   );
 }

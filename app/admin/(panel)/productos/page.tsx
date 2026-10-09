@@ -55,7 +55,7 @@ export default async function AdminProductosPage() {
                 </td>
                 <td className="px-4 py-3 font-mono text-xs text-brand-ink-soft">{p.sku}</td>
                 <td className="px-4 py-3 text-brand-ink-soft">{p.category.name}</td>
-                <td className="px-4 py-3 font-mono text-brand-ink-soft">{money(Number(p.price))}</td>
+                <td className="px-4 py-3 font-mono text-brand-ink-soft">{Number(p.price) > 0 ? money(Number(p.price)) : "A cotizar"}</td>
                 <td className="px-4 py-3 font-mono text-brand-ink-soft">{p.stock}</td>
                 <td className="px-4 py-3">
                   <span

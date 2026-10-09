@@ -25,7 +25,13 @@ export default function CatalogoClient({
   );
   const [activeBrands, setActiveBrands] = useState<string[]>([]);
   const [activeAvailability, setActiveAvailability] = useState<Availability[]>([]);
-  const [maxPrice, setMaxPrice] = useState(3500);
+  // El tope del filtro se calcula con el producto más caro del catálogo
+  // (redondeado hacia arriba a miles) para que nunca oculte productos.
+  const priceCeiling = useMemo(
+    () => Math.max(1000, Math.ceil(Math.max(0, ...products.map((p) => p.price)) / 1000) * 1000),
+    [products]
+  );
+  const [maxPrice, setMaxPrice] = useState(priceCeiling);
   const [sort, setSort] = useState<SortKey>("relevancia");
 
   function toggle<T>(list: T[], value: T, setList: (v: T[]) => void) {
@@ -34,22 +40,26 @@ export default function CatalogoClient({
 
   const filtered = useMemo(() => {
     let result = products.filter((p) => {
+      const q = query.trim().toLowerCase();
       const matchesQuery =
-        query.trim() === "" ||
-        p.name.toLowerCase().includes(query.toLowerCase()) ||
-        p.sku.toLowerCase().includes(query.toLowerCase()) ||
-        p.brand.toLowerCase().includes(query.toLowerCase());
+        q === "" ||
+        p.name.toLowerCase().includes(q) ||
+        p.sku.toLowerCase().includes(q) ||
+        p.brand.toLowerCase().includes(q) ||
+        (p.categoryName ?? "").toLowerCase().includes(q);
       const matchesCategory = activeCategories.length === 0 || activeCategories.includes(p.category);
       const matchesBrand = activeBrands.length === 0 || activeBrands.includes(p.brand);
       const matchesAvailability =
         activeAvailability.length === 0 || activeAvailability.includes(p.availability);
+      // Los productos "a cotizar" (precio 0) siempre pasan el filtro de precio.
       const matchesPrice = p.price <= maxPrice;
       return matchesQuery && matchesCategory && matchesBrand && matchesAvailability && matchesPrice;
     });
 
     switch (sort) {
       case "precio-asc":
-        result = [...result].sort((a, b) => a.price - b.price);
+        // Los productos "a cotizar" van al final en ambos órdenes de precio.
+        result = [...result].sort((a, b) => (a.price || Infinity) - (b.price || Infinity));
         break;
       case "precio-desc":
         result = [...result].sort((a, b) => b.price - a.price);
@@ -152,9 +162,9 @@ export default function CatalogoClient({
             </h3>
             <input
               type="range"
-              min={50}
-              max={3500}
-              step={50}
+              min={0}
+              max={priceCeiling}
+              step={Math.max(50, Math.round(priceCeiling / 200 / 50) * 50)}
               value={maxPrice}
               onChange={(e) => setMaxPrice(Number(e.target.value))}
               className="w-full accent-brand-blue"

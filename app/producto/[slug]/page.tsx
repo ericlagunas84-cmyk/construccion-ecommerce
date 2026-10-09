@@ -7,6 +7,8 @@ import ProductCard from "@/components/ProductCard";
 import { money } from "@/lib/format";
 import { getProductBySlug, getRelatedProducts } from "@/lib/data/catalog";
 import AddToCart from "@/components/AddToCart";
+import ProductGallery from "@/components/ProductGallery";
+import { isQuoteOnly, whatsappQuoteUrl } from "@/lib/whatsapp";
 import ProductReviews from "@/components/ProductReviews";
 import { prisma } from "@/lib/prisma";
 
@@ -51,6 +53,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
   if (!product) return notFound();
 
   const related = await getRelatedProducts(product);
+  const quoteOnly = isQuoteOnly(product);
   const dbProduct = await prisma.product.findUnique({ where: { slug: product.slug } });
   const reviews = dbProduct
     ? await prisma.review.findMany({
@@ -79,26 +82,10 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
 
         <div className="grid gap-10 md:grid-cols-2">
           {/* Galería */}
-          <div>
-            <div className="mb-3 flex aspect-square items-center justify-center overflow-hidden rounded-lg bg-brand-blue-light text-xs font-mono text-brand-ink-soft">
-              {product.imageUrl ? (
-                // eslint-disable-next-line @next/next/no-img-element
-                <img src={product.imageUrl} alt={product.name} className="h-full w-full object-contain p-4" />
-              ) : (
-                "foto principal 1200×1200 — clic para zoom"
-              )}
-            </div>
-            <div className="grid grid-cols-4 gap-3">
-              {[1, 2, 3, 4].map((i) => (
-                <div
-                  key={i}
-                  className="flex aspect-square items-center justify-center rounded-md border border-brand-line bg-brand-blue-light text-[10px] font-mono text-brand-ink-soft"
-                >
-                  foto {i}
-                </div>
-              ))}
-            </div>
-          </div>
+          <ProductGallery
+            images={Array.from(new Set([product.imageUrl, ...(product.gallery ?? [])].filter((x): x is string => Boolean(x))))}
+            alt={product.name}
+          />
 
           {/* Info */}
           <div>
@@ -109,11 +96,17 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
             <p className="mb-4 font-mono text-xs text-brand-ink-soft">SKU {product.sku}</p>
 
             <div className="mb-4 flex items-baseline gap-3 font-mono">
-              <span className="text-3xl font-medium text-brand-ink">{money(product.price)}</span>
-              {product.compareAtPrice && (
-                <span className="text-base text-brand-ink-soft line-through">
-                  {money(product.compareAtPrice)}
-                </span>
+              {quoteOnly ? (
+                <span className="text-2xl font-semibold text-brand-blue">Precio a cotizar</span>
+              ) : (
+                <>
+                  <span className="text-3xl font-medium text-brand-ink">{money(product.price)}</span>
+                  {product.compareAtPrice && (
+                    <span className="text-base text-brand-ink-soft line-through">
+                      {money(product.compareAtPrice)}
+                    </span>
+                  )}
+                </>
               )}
             </div>
 
@@ -130,10 +123,26 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
             </p>
 
             <p className="mb-8 text-sm leading-relaxed text-brand-ink-soft">
-              {product.description}
+              {product.shortDescription}
             </p>
 
-            <AddToCart product={product} disabled={product.availability === "agotado"} />
+            {quoteOnly ? (
+              <div>
+                <a
+                  href={whatsappQuoteUrl(product)}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 rounded-md bg-brand-orange px-6 py-3 text-sm font-semibold uppercase tracking-wide text-white transition hover:bg-brand-orange-dark"
+                >
+                  Solicitar cotización por WhatsApp
+                </a>
+                <p className="mt-2 text-xs text-brand-ink-soft">
+                  El precio de este equipo depende de configuración y disponibilidad; te respondemos el mismo día.
+                </p>
+              </div>
+            ) : (
+              <AddToCart product={product} disabled={product.availability === "agotado"} />
+            )}
 
             {product.hasTechSheet && (
               <a
@@ -146,6 +155,16 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
                   <path d="M12 3v11.4l-3.6-3.6L7 12.2l5 5 5-5-1.4-1.4-3.6 3.6V3zM5 19h14v2H5z" />
                 </svg>
                 Descargar ficha técnica (PDF)
+              </a>
+            )}
+            {!product.hasTechSheet && product.manufacturerUrl && (
+              <a
+                href={product.manufacturerUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-brand-blue hover:text-brand-orange"
+              >
+                Ver información del fabricante →
               </a>
             )}
           </div>
@@ -166,7 +185,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
           </div>
           <div>
             <h2 className="mb-4 text-lg font-bold text-brand-ink">Descripción completa</h2>
-            <p className="text-sm leading-relaxed text-brand-ink-soft">{product.description}</p>
+            <p className="whitespace-pre-line text-sm leading-relaxed text-brand-ink-soft">{product.description}</p>
           </div>
         </div>
 

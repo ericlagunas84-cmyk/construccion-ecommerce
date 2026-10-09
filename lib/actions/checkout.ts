@@ -62,6 +62,11 @@ export async function createOrder(input: CheckoutInput) {
     if (!product) {
       throw new Error(`Producto no encontrado: ${item.sku}`);
     }
+    if (!(Number(product.price) > 0)) {
+      throw new Error(
+        `"${product.name}" se vende bajo cotización. Quítalo del carrito y solicítalo por WhatsApp.`
+      );
+    }
     if (product.availability === "AGOTADO" || product.stock < item.qty) {
       throw new Error(
         `"${product.name}" ya no tiene suficiente stock disponible (quedan ${product.stock}). Ajusta la cantidad en tu carrito.`

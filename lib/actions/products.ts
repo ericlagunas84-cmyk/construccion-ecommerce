@@ -36,7 +36,7 @@ export async function createProduct(formData: FormData) {
   const featured = formData.get("featured") === "on";
   const imageUrl = String(formData.get("imageUrl") ?? "").trim();
 
-  if (!name || !sku || !categorySlug || !brandName || !price) {
+  if (!name || !sku || !categorySlug || !brandName || !Number.isFinite(price) || price < 0) {
     throw new Error("Faltan campos requeridos");
   }
 
@@ -78,7 +78,7 @@ export async function updateProduct(id: string, formData: FormData) {
   const visible = formData.get("visible") === "on";
   const imageUrl = String(formData.get("imageUrl") ?? "").trim();
 
-  if (!name || !categorySlug || !brandName || !price) {
+  if (!name || !categorySlug || !brandName || !Number.isFinite(price) || price < 0) {
     throw new Error("Faltan campos requeridos");
   }
 
